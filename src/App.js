@@ -10,8 +10,8 @@ const myValueSlice = createSlice({
     },
     decrement(state, action) {
       return state - action.payload;
-    }
-  }
+    },
+  },
 });
 
 export const { increment, decrement } = myValueSlice.actions;
@@ -25,8 +25,8 @@ const itemsSlice = createSlice({
     },
     remove(state, action) {
       return state.filter((item) => item.id !== action.payload);
-    }
-  }
+    },
+  },
 });
 
 export const { add, remove } = itemsSlice.actions;
@@ -36,6 +36,41 @@ console.log(myValueSlice);
 export const store = configureStore({
   reducer: {
     myValue: myValueSlice.reducer,
-    items: itemsSlice.reducer
-  }
+    items: itemsSlice.reducer,
+  },
 });
+
+const state = ["Take Five", "Claire de Lune", "Respect"];
+
+const addNewContact = {
+  type: "phonebook/addNewContact",
+  payload: {
+    id,
+    name,
+  },
+};
+
+const removeContact = {
+  type: "phonebook/removeContact",
+  payload: {
+    id,
+  },
+};
+
+const removeAllContacts = {
+  type: "phonebook/removeAllContacts",
+};
+
+const reducer = (state = initialState, action) => {
+  switch (action.type) {
+    case "phonebook/addNewContact": {
+      return [...state, action.payload];
+    }
+    case "phonebook/removeContact": {
+      return state.filter((contact) => contact !== action.payload);
+    }
+    default: {
+      return state;
+    }
+  }
+};
